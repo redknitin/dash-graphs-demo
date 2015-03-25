@@ -1,0 +1,202 @@
+<!doctype html><html>
+<head>
+	<title></title>
+	<link rel="stylesheet" href="css/bootstrap.min.css" />
+	<link rel="stylesheet" href="css/morris.css" />
+	<script src="js/jquery-2.1.3.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+	<script src="js/raphael-min.js"></script>
+	<script src="js/morris.min.js"></script>
+	<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+	<style>
+	#pushBodyDown { margin-bottom: 80px; }
+	.jumbo-alert { background-color: #faa; }
+	</style>
+</head>
+<body>
+    <nav class="navbar navbar-inverse"><!-- navbar-fixed-top -->
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">GleeMonkey</a>
+        </div>
+        <div id="navbar" class="collapse navbar-collapse">
+          <ul class="nav navbar-nav">
+            <li class="active"><a href="#">Home</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#contact">Contact</a></li>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </nav>
+	
+	<div id="pushBodyDown"></div>
+	
+    <div class="container">
+		<div class="row">
+			<div class="col-md-3">
+				<div class="jumbotron text-center">
+				<p>Stock Level</p>
+				<h1>10</h1>
+				<p>carrots</p>
+				</div>
+			</div>
+			<div class="col-md-3">
+				<div class="jumbotron text-center">
+				<p>Stock Level</p>
+				<h1>20</h1>
+				<p>cauliflowers</p>
+				</div>
+			</div>
+			<div class="col-md-3">
+				<div class="jumbotron text-center jumbo-alert">
+				<p>Stock Level</p>
+				<h1>8</h1>
+				<p>cucumbers</p>
+				</div>
+			</div>
+			<div class="col-md-3">
+				<div class="jumbotron text-center">
+				<p>Stock Level</p>
+				<h1>10</h1>
+				<p>potatoes</p>
+				</div>
+			</div>
+		</div>
+		
+		
+		<div class="row">
+			<table class="table table-bordered table-striped">
+				<thead>
+					<tr>
+						<th>Singular</th>
+						<th>Singular</th>
+						<th>Singular</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>Rock</td>
+						<td>Rock</td>
+						<td>Rock</td>
+					</tr>
+					<tr class="info">
+						<td>Rock</td>
+						<td>Rock</td>
+						<td>Rock</td>
+					</tr>
+					<tr>
+						<td>Rock</td>
+						<td>Rock</td>
+						<td>Rock</td>
+					</tr>
+					<tr class="warning">
+						<td>Rock</td>
+						<td>Rock</td>
+						<td>Rock</td>
+					</tr>
+					<tr class="danger">
+						<td>Rock</td>
+						<td>Rock</td>
+						<td>Rock</td>
+					</tr>
+					<tr>
+						<td>Rock</td>
+						<td>Rock</td>
+						<td>Rock</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		
+		
+		<div class="row">
+			<div class="col-md-4">
+				<div id="graph-donut"></div>
+			</div>
+			<div class="col-md-4">
+				<div id="graph-line"></div>
+			</div>
+			<div class="col-md-4">
+				<div id="chart-gauge"></div>
+			</div>
+		</div>
+    </div><!-- /.container -->	
+			<script>
+			Morris.Donut({
+				element: 'graph-donut',
+				data: [
+					{label: 'Red', value: 5},
+					{label: 'Blue', value: 15},
+					{label: 'Green', value: 80}
+				],
+				colors: ['red', 'blue', 'green', 'yellow', 'orange']
+			});
+			
+			new Morris.Line({
+			  // ID of the element in which to draw the chart.
+			  element: 'graph-line',
+			  // Chart data records -- each entry in this array corresponds to a point on
+			  // the chart.
+			  data: [
+				{ year: '2008', value: 20 },
+				{ year: '2009', value: 10 },
+				{ year: '2010', value: 5 },
+				{ year: '2011', value: 5 },
+				{ year: '2012', value: 20 }
+			  ],
+			  // The name of the data record attribute that contains x-values.
+			  xkey: 'year',
+			  // A list of names of data record attributes that contain y-values.
+			  ykeys: ['value'],
+			  // Labels for the ykeys -- will be displayed when you hover over the
+			  // chart.
+			  labels: ['Value']
+			});
+			</script>
+    <script type="text/javascript">
+      google.load("visualization", "1", {packages:["gauge"]});
+      google.setOnLoadCallback(drawChart);
+      function drawChart() {
+
+        var data = google.visualization.arrayToDataTable([
+          ['Label', 'Value'],
+//          ['Memory', 80],
+          ['CPU', 55] //,
+//          ['Network', 68]
+        ]);
+
+        var options = {
+//          width: 400, height: 120,
+          redFrom: 90, redTo: 100,
+          yellowFrom:75, yellowTo: 90,
+          minorTicks: 5
+        };
+
+        var chart = new google.visualization.Gauge(document.getElementById('chart-gauge'));
+
+        chart.draw(data, options);
+
+		/*
+        setInterval(function() {
+          data.setValue(0, 1, 40 + Math.round(60 * Math.random()));
+          chart.draw(data, options);
+        }, 13000);
+        setInterval(function() {
+          data.setValue(1, 1, 40 + Math.round(60 * Math.random()));
+          chart.draw(data, options);
+        }, 5000);
+        setInterval(function() {
+          data.setValue(2, 1, 60 + Math.round(20 * Math.random()));
+          chart.draw(data, options);
+        }, 26000);
+		*/
+      }
+    </script>	
+</body>
+</html>
